@@ -5,15 +5,22 @@
   <meta charset="utf-8">
   <meta name="theme-color" content="#1A4171">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
   <script src="vue@3.2.20.global.prod.js"></script>
 </head>
 
 <body>
   <div id="app">
-    <h2>TSM-Net</h2>
-    <h2>Temporal Compressing Autoencoder with Adversarial Losses for Time-Scale Modification on Audio Signals.</h2>
-
+    <h1>TSM-Net</h1>
+    <h1>Temporal Compressing Autoencoder with Adversarial Losses for Time-Scale Modification on Audio Signals.</h1>
+    <h2>Abstract</h2>
     <p>We proposed a novel approach in the field of time-scale modification on the audio signals. While traditional methods use framing technique and spectral approaches use short-time Fourier transform to get high-level units. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation called Neuralgram. Since the resulting Neuralgram is a two-dimensional image with real values, we apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the unseen scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification.</p>
+    <h2>Authors</h2>
+    <p>
+      Shao-Hsuan Chu, b073040018@nsysu.edu.tw <br>
+      Ju-Ting Chen <br>
+      National Sun Yat-sen University, Taiwan
+    </p>
     <hr>
     
 
@@ -28,13 +35,15 @@
 
       <br>
       
-      <figure v-for="r in rate" style="display: inline">
-        <figcaption>{{ r }}x</figcaption>
-        <audio :ref="d+r" controls>
-          <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
-          Your browser does not support the audio element.
-        </audio>
-      </figure>
+      <div class="container">
+        <figure v-for="r in rate">
+          <figcaption>{{ r }}x</figcaption>
+          <audio :ref="d+r" controls preload="metadata">
+            <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
+            Your browser does not support the audio element.
+          </audio>
+        </figure>
+      </div>
     </div>
   </div>
   <script src="app.js"></script>
