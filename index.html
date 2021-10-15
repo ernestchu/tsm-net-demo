@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TSM-Net Demo</title>
+  <meta charset="utf-8">
+  <meta name="theme-color" content="#1A4171">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="vue@3.2.20.global.prod.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h2>TSM-Net</h2>
+    <h2>Temporal Compressing Autoencoder with Adversarial Losses for Time-Scale Modification on Audio Signals.</h2>
+
+    <p>We proposed a novel approach in the field of time-scale modification on the audio signals. While traditional methods use framing technique and spectral approaches use short-time Fourier transform to get high-level units. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation called Neuralgram. Since the resulting Neuralgram is a two-dimensional image with real values, we apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the unseen scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification.</p>
+    <hr>
+    
+
+    <div v-for="d in DS">
+      <h3>{{ d }}</h3>
+      <label :for="`CR${d}`">Compression ratio</label>
+      <select :id="`CR${d}`" :name="`CR${d}`" v-model="CR[d]">
+        <option>1024</option>
+        <option>512</option>
+        <option>256</option>
+      </select>
+
+      <br>
+      
+      <audio v-for="r in rate" :ref="d+r" controls>
+        <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
