@@ -18,7 +18,7 @@
     
 
     <div v-for="d in DS">
-      <h3>{{ d }}</h3>
+      <h2>{{ d }}</h2>
       <label :for="`CR${d}`">Compression ratio</label>
       <select :id="`CR${d}`" :name="`CR${d}`" v-model="CR[d]">
         <option>1024</option>
@@ -28,10 +28,13 @@
 
       <br>
       
-      <audio v-for="r in rate" :ref="d+r" controls>
-        <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
-        Your browser does not support the audio element.
-      </audio>
+      <figure v-for="r in rate" style="display: inline">
+        <figcaption>{{ r }}x</figcaption>
+        <audio :ref="d+r" controls>
+          <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </figure>
     </div>
   </div>
   <script src="app.js"></script>
