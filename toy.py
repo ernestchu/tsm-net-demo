@@ -31,6 +31,8 @@ def stretch(dirs, filename, rate):
 
 def convert_to_wav(dirs, filename):
     new_filename = filename.split('.')
+    if new_filename[-1] == 'wav':
+        return filename, 0
     new_filename[-1] = 'wav'
     new_filename = '.'.join(new_filename)
     return new_filename, subprocess.run(
@@ -38,12 +40,34 @@ def convert_to_wav(dirs, filename):
         shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode
 
 @app.route('/', methods=['GET', 'POST'])
-def upload_file():
+def tsm():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+            # YT version
+            if 'ytlink' not in request.form:
+                flash('No file part or YouTube link')
+                return redirect(request.url)
+            ytlink = request.form['ytlink']
+            filename = ytlink[-5:] + '.webm'
+            filename = secure_filename(filename)
+            status = subprocess.run(
+                f'youtube-dl -f worstaudio {ytlink} -o {os.path.join(app.config["UPLOAD_FOLDER"], filename)}',
+                shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode
+            if status != 0:
+                flash('Cannot download the YouTube video')
+                return redirect(request.url)
+
+            filename, status = convert_to_wav(app.config['UPLOAD_FOLDER'], filename)
+            if status != 0:
+                flash('Download fail corrupted')
+                return redirect(request.url)
+            filename = stretch(
+                app.config['UPLOAD_FOLDER'], filename,
+                float(request.form['rate'])
+            )
+            return redirect(url_for('download_file', name=filename))
+
         file = request.files['file']
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
@@ -55,6 +79,8 @@ def upload_file():
             return redirect(request.url)
         if file: # and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            if '.' not in filename: # when filename contains only Chinese
+                filename = 'audio.' + filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             filename, status = convert_to_wav(app.config['UPLOAD_FOLDER'], filename)
             if status != 0:
@@ -71,9 +97,23 @@ def upload_file():
     <h1>Upload new File</h1>
     <form method=post enctype=multipart/form-data>
       <label for="rate">rate</label>
-      <input id="rate" name="rate" type="number" step="any" min="0.01" value="0.75">
+      <input id="rate" name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
+       oninput="this.nextElementSibling.value = this.value"
+       style="width: 400px;">
+      <output>0.75</output>
       <input type=file name=file>
       <input type=submit value=Upload>
+    </form>
+    <h1>From YouTube</h1>
+    <form method=post>
+      <label for="rate">rate</label>
+      <input id="rate" name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
+       oninput="this.nextElementSibling.value = this.value"
+       style="width: 400px;">
+      <output>0.75</output>
+      <label for="ytlink">YouTube Link</label>
+      <input name="ytlink">
+      <input type=submit value=submit>
     </form>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
