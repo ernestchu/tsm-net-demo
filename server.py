@@ -39,8 +39,12 @@ def convert_to_wav(dirs, filename):
         f'ffmpeg -y -i {os.path.join(dirs, filename)} {os.path.join(dirs, new_filename)}',
         shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode
 
-@app.route('/', methods=['GET', 'POST'])
-def tsm():
+@app.route('/')
+def index():
+    return 'I\'m healthy.'
+
+@app.route('/toy', methods=['GET', 'POST'])
+def toy():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
