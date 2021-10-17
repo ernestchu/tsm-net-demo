@@ -18,14 +18,6 @@ const app = Vue.createApp({
       rate: [ '0.5', '0.75', '1.0', '1.25', '1.5', '1.75', '2.0' ]
     }
   },
-  created () {
-    axios
-      .get(backend)
-      .then(() => {
-        this.live.enable = true
-      })
-      .catch()
-  },
   watch: {
     'CR.fma': function () {
       for (const r of this.rate) {
