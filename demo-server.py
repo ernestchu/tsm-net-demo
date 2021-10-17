@@ -4,6 +4,7 @@ from tsmnet import Stretcher
 import torch
 import torchaudio
 from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template_string
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '.tmp'
@@ -12,6 +13,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 stretcher = Stretcher('tsm-net/weights')
 app = Flask(__name__)
+CORS(app)
 app.secret_key = b'g chen is fucking handsome'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -39,12 +41,8 @@ def convert_to_wav(dirs, filename):
         f'ffmpeg -y -i {os.path.join(dirs, filename)} {os.path.join(dirs, new_filename)}',
         shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode
 
-@app.route('/')
-def index():
-    return 'I\'m healthy.'
-
-@app.route('/toy', methods=['GET', 'POST'])
-def toy():
+@app.route('/', methods=['GET', 'POST'])
+def demo():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
