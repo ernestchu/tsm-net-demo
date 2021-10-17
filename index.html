@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#1A4171">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
-  <script src="vue@3.2.20.global.prod.js"></script>
+  <script src="https://unpkg.com/vue@3.2.20/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -23,10 +24,36 @@
         National Sun Yat-sen University, Taiwan
       </p>
       <hr>
-      
 
+      <h2>Live demo</h2>
+      <div v-if="live.enable">
+        <div>
+          <input type="radio" id="File" value="File" v-model="live.source">
+          <label for="File">File</label>
+          <input type="radio" id="YouTube" value="YouTube" v-model="live.source">
+          <label for="YouTube">YouTube</label>
+        </div>
+
+        <div>
+          <input id="rate" type="range" step="0.01" min="0.01" max="2" v-model="live.rate">
+          <input v-model="live.rate">
+        </div>
+
+        <div v-if="live.source === 'File'">
+          <label for="file-upload">File Upload</label>
+          <input id="file-upload" type="file">
+        </div>
+        <div v-else>
+          <label for="ytlink">YouTube Link</label>
+          <input id="ytlink">
+        </div>
+      </div>
+      <p v-else>The back-end server is currently down. You can browse our samples below.</p>
+      <hr>
+
+      <h2>Samples</h2>
       <div v-for="d in DS">
-        <h2>{{ d }}</h2>
+        <h3>{{ d }}</h3>
         <label :for="`CR${d}`">Compression ratio</label>
         <select :id="`CR${d}`" :name="`CR${d}`" v-model="CR[d]">
           <option>1024</option>
