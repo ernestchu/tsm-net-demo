@@ -116,7 +116,7 @@ def toy():
        style="width: 400px;">
       <output>0.75</output>
       <label for="ytlink">YouTube Link</label>
-      <input name="ytlink">
+      <input id="ytlink" name="ytlink">
       <input type=submit value=submit>
     </form>
     {% with messages = get_flashed_messages() %}
