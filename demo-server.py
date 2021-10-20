@@ -95,37 +95,45 @@ def demo():
             return redirect(url_for('download_file', name=filename))
     return render_template_string('''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <label for="rate">rate</label>
-      <input id="rate" name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
-       oninput="this.nextElementSibling.value = this.value"
-       style="width: 400px;">
-      <output>0.75</output>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    <h1>From YouTube</h1>
-    <form method=post>
-      <label for="rate">rate</label>
-      <input id="rate" name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
-       oninput="this.nextElementSibling.value = this.value"
-       style="width: 400px;">
-      <output>0.75</output>
-      <label for="ytlink">YouTube Link</label>
-      <input id="ytlink" name="ytlink">
-      <input type=submit value=submit>
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <script>
-        {% for message in messages %}
-            alert('{{ message }}')
-        {% endfor %}
-        </script>
-      {% endif %}
-    {% endwith %}
+    <head>
+      <title>TSM-Net Live Demo</title>
+    </head>
+    <body>
+      <h1>TSM-Net Live Demo</h1>
+      <h2>Upload audio File</h2>
+      <form method=post enctype=multipart/form-data>
+        <label>Rate</label>
+        <input name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
+         oninput="this.nextElementSibling.value = this.value"
+         style="width: 400px;">
+        <output>0.75</output>
+        <br>
+        <label for="file">File</label>
+        <input id="file" type=file name=file>
+        <input type=submit value=Upload>
+      </form>
+      <h2>From YouTube</h2>
+      <form method=post>
+        <label>Rate</label>
+        <input name="rate" type="range" step="0.01" min="0.01" max="2" value="0.75"
+         oninput="this.nextElementSibling.value = this.value"
+         style="width: 400px;">
+        <output>0.75</output>
+        <br>
+        <label for="ytlink">YouTube Link</label>
+        <input id="ytlink" name="ytlink">
+        <input type=submit value=Submit>
+      </form>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <script>
+          {% for message in messages %}
+              alert('{{ message }}')
+          {% endfor %}
+          </script>
+        {% endif %}
+      {% endwith %}
+    </body>
     ''')
 
 @app.route('/uploads/<name>')
