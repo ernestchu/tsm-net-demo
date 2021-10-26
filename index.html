@@ -32,8 +32,16 @@
       <h2>Samples</h2>
       <div v-for="d in DS">
         <h3>{{ d }}</h3>
+        <label :for="`audio${d}`">Audio</label>
+        <select :id="`audio${d}`" v-model="audio[d]">
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+
         <label :for="`CR${d}`">Compression ratio</label>
-        <select :id="`CR${d}`" :name="`CR${d}`" v-model="CR[d]">
+        <select :id="`CR${d}`"  v-model="CR[d]">
           <option>1024</option>
           <option>512</option>
           <option>256</option>
@@ -46,7 +54,7 @@
           <figure v-for="r in rate">
             <figcaption>{{ r }}x</figcaption>
             <audio :ref="d+r" controls preload="metadata">
-              <source :src="`assets/${d}/${CR[d]}/${r}.wav`" type="audio/wav">
+              <source :src="`assets/${d}/${audio[d]}/${CR[d]}/${r}.wav`" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </figure>

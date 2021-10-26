@@ -9,6 +9,12 @@ const app = Vue.createApp({
         rate: 0.75
       },
       DS: [ 'fma', 'musicnet' , 'vctk', 'yang' ],
+      audio: {
+        fma: 0,
+        musicnet: 0,
+        vctk: 0,
+        yang: 0
+      },
       CR: {
         fma: 1024,
         musicnet: 1024,
@@ -19,24 +25,19 @@ const app = Vue.createApp({
     }
   },
   watch: {
-    'CR.fma': function () {
+    'CR.fma':         function () { this.reload('fma') },
+    'audio.fma':      function () { this.reload('fma') },
+    'CR.musicnet':    function () { this.reload('musicnet') },
+    'audio.musicnet': function () { this.reload('musicnet') },
+    'CR.vctk':        function () { this.reload('vctk') },
+    'audio.vctk':     function () { this.reload('vctk') },
+    'CR.yang':        function () { this.reload('yang') },
+    'audio.yang':     function () { this.reload('yang') }
+  },
+  methods: {
+    reload (key) {
       for (const r of this.rate) {
-        this.$refs['fma' + r].load()
-      }
-    },
-    'CR.musicnet': function () {
-      for (const r of this.rate) {
-        this.$refs['musicnet' + r].load()
-      }
-    },
-    'CR.vctk': function () {
-      for (const r of this.rate) {
-        this.$refs['vctk' + r].load()
-      }
-    },
-    'CR.yang': function () {
-      for (const r of this.rate) {
-        this.$refs['yang' + r].load()
+        this.$refs[key + r].load()
       }
     }
   }
