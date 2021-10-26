@@ -15,7 +15,7 @@
     <div class="body">
       <h1>Temporal Compressing Autoencoder with Adversarial Losses for Time-Scale Modification on Audio Signals.</h1>
       <h2>Abstract</h2>
-      <p>We proposed a novel approach in the field of time-scale modification on the audio signals. While traditional methods use framing technique and spectral approaches use short-time Fourier transform to get high-level units. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation called Neuralgram. Since the resulting Neuralgram is a two-dimensional image with real values, we apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the unseen scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification.</p>
+      <p>We proposed a novel approach in the field of time-scale modification on the audio signals. While traditional methods use framing technique and spectral approaches use short-time Fourier transform to get high-level units. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation called Neuralgram. Since the resulting Neuralgram is a two-dimensional image with real values, we apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the unseen scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification. <a href="https://ernestchu.github.io/tsm-net/tsm-net.pdf" target="_blank">[paper]</a></p>
       <h2>Authors</h2>
       <p>
         Shao-Hsuan Chu, b073040018@nsysu.edu.tw <br>
@@ -25,11 +25,24 @@
       <hr>
 
       <h2>Live demo</h2>
-      <p>Please visit our <a href="http://34.132.148.183:5000/" target="_blank">demo page</a></p>
+      <p>Please visit our <a href="http://34.132.148.183:5000/" target="_blank">demo page</a>.</p>
+      <p>Please note that the overhead is mostly produced by the network transmission. Especially in the application related to YouTube, we have to first download the full-length audio. So please be patient.</p>
 
       <hr>
 
       <h2>Samples</h2>
+      <p>There are 5 audio clips and 5 different stretchers, including 3 compression ratios, for each dataset. Please go to the datasets' homepages to get more original clips.</p>
+      <ul>
+        <li><a href="https://github.com/mdeff/fma" target="_blank">FMA</a></li>
+        <li><a href="https://homes.cs.washington.edu/~thickstn/musicnet.html" target="_blank">MusicNet</a></li>
+        <li><a href="https://datashare.ed.ac.uk/handle/10283/3443" target="_blank">VCTK</a></li>
+        <li><a href="https://github.com/ernestchu/yang-ds-speech" target="_blank">Yang DS Speech</a></li>
+      </ul>
+      <p>Traditional TSM algorithms for the purpose of comparison.</p>
+      <ul>
+        <li>PV-TSM, implemented by <a href="https://librosa.org/doc/latest/generated/librosa.effects.time_stretch.html" target="_blank">librosa</a></li>
+        <li>WSOLA, implemented by <a href="https://pysox.readthedocs.io/en/latest/api.html#sox.transform.Transformer.tempo" target="_blank">SoX</a></li>
+      </ul>
       <div v-for="d in DS">
         <h3>{{ d }}</h3>
         <label :for="`audio${d}`">Audio</label>
@@ -38,6 +51,7 @@
           <option>1</option>
           <option>2</option>
           <option>3</option>
+          <option>4</option>
         </select>
 
         <label :for="`CR${d}`">Compression ratio</label>
@@ -46,6 +60,7 @@
           <option>512</option>
           <option>256</option>
           <option>librosa</option>
+          <option>sox</option>
         </select>
 
         <br>
@@ -54,7 +69,7 @@
           <figure v-for="r in rate">
             <figcaption>{{ r }}x</figcaption>
             <audio :ref="d+r" controls preload="metadata">
-              <source :src="`assets/${d}/${audio[d]}/${CR[d]}/${r}.wav`" type="audio/wav">
+              <source :src="`assets/${d}/${audio[d]}/${CR[d]}/${r}.mp3`" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </figure>
