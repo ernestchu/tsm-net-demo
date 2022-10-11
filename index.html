@@ -13,13 +13,14 @@
   <div id="app">
     <div class="header">TSM-Net</div>
     <div class="body">
-      <h1>Temporal Compressing Autoencoder with Adversarial Losses for Time-Scale Modification on Audio Signals.</h1>
+      <h1>Audio Time-Scale Modification with Temporal Compressing Networks</h1>
       <h2>Abstract</h2>
-      <p>We proposed a novel approach in the field of time-scale modification on the audio signals. While traditional methods use framing technique and spectral approaches use short-time Fourier transform to get high-level units. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation called Neuralgram. Since the resulting Neuralgram is a two-dimensional image with real values, we apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the unseen scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification. <a href="https://ernestchu.github.io/tsm-net/tsm-net.pdf" target="_blank">[paper]</a></p>
+      <p>We proposed a novel approach in the field of time-scale modification on audio signals. While traditional methods use the framing technique and spectral approaches use short-time Fourier transform to preserve the frequency during temporal stretching. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation. We call it Neuralgram, in which one vector represents 1024 audio samples. It is inspired by the framing technique but addresses the clipping artifacts. The Neuralgram is a two-dimensional matrix with real values, we can apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification. The audio samples can be found on our website.</p>
       <h2>Authors</h2>
       <p>
-        Shao-Hsuan Chu, b073040018@nsysu.edu.tw <br>
+        Ernie Chu, shchu@citi.sinica.edu.tw <br>
         Ju-Ting Chen, b072010029@nsysu.edu.tw <br>
+        Chia-Ping Chen, cpchen@cse.nsysu.edu.tw <br>
         National Sun Yat-sen University, Taiwan
       </p>
       <hr>
