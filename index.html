@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TSM-Net Demo</title>
+  <title>TSM-Net</title>
   <meta charset="utf-8">
   <meta name="theme-color" content="#1A4171">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,21 @@
     <div class="body">
       <h1>Audio Time-Scale Modification with Temporal Compressing Networks</h1>
       <h2>Abstract</h2>
-      <p>We proposed a novel approach in the field of time-scale modification on audio signals. While traditional methods use the framing technique and spectral approaches use short-time Fourier transform to preserve the frequency during temporal stretching. TSM-Net, our neural-network model encodes the raw audio into a high-level latent representation. We call it Neuralgram, in which one vector represents 1024 audio samples. It is inspired by the framing technique but addresses the clipping artifacts. The Neuralgram is a two-dimensional matrix with real values, we can apply some existing image resizing techniques on the Neuralgram and decode it using our neural decoder to obtain the time-scaled audio. Both the encoder and decoder are trained with GANs, which shows fair generalization ability on the scaled Neuralgrams. Our method yields little artifacts and opens a new possibility in the research of modern time-scale modification. The audio samples can be found on our website.</p>
+      <p>
+        We proposed a novel approach in the field of time-scale modification on  
+        audio signals. While traditional methods use the framing technique, spectral 
+        approach uses the short-time Fourier transform to preserve the frequency during
+        temporal stretching. TSM-Net, our neural-network model encodes the raw audio 
+        into a high-level latent representation. We call it Neuralgram, in which one
+        vector represents 1024 audio samples. It is inspired by the framing technique
+        but addresses the clipping artifacts. The Neuralgram is a two-dimensional matrix 
+        with real values, we can apply some existing image resizing techniques on the 
+        Neuralgram and decode it using our neural decoder to obtain the time-scaled 
+        audio. Both the encoder and decoder are trained with GANs, which shows fair 
+        generalization ability on the scaled Neuralgrams. Our method yields little 
+        artifacts and opens a new possibility in the research of modern time-scale 
+        modification.
+      </p>
       <h2>Authors</h2>
       <p>
         Ernie Chu, shchu@citi.sinica.edu.tw <br>
@@ -48,7 +62,7 @@
       </ul>
       <div v-for="d in DS">
         <h3>{{ d }}</h3>
-        <label :for="`audio${d}`">Audio</label>
+        <label :for="`audio${d}`">Sample</label>
         <select :id="`audio${d}`" v-model="audio[d]">
           <option>0</option>
           <option>1</option>
